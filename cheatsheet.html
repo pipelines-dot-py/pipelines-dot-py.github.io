@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Python Cheat Sheet — pipelines.py</title>
+<meta name="description" content="Get your free Python From Zero cheat sheet. One page per episode. Clear. Beginner-friendly. From pipelines.py.">
+<link rel="canonical" href="https://pipelinesdotpy.com/cheatsheet.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:#0D1117; color:#F8FAFC;
+    font-family:'Inter',sans-serif; line-height:1.6;
+    min-height:100vh; overflow-x:hidden;
+  }
+  body::before {
+    content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:48px 48px;
+  }
+  .orb { position:fixed; border-radius:50%; pointer-events:none; z-index:0; filter:blur(80px); }
+  .orb-1 { width:600px; height:600px; top:-200px; left:-200px;
+    background:radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%); }
+  .orb-2 { width:500px; height:500px; bottom:-150px; right:-150px;
+    background:radial-gradient(circle, rgba(6,182,212,0.20) 0%, transparent 70%); }
+  .container { max-width:860px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+
+  /* ── Chrome Nav ── */
+  nav {
+    border-bottom:1px solid rgba(255,255,255,0.07);
+    background:rgba(8,11,17,0.85); backdrop-filter:blur(12px);
+    position:sticky; top:0; z-index:100;
+  }
+  .chrome-bar {
+    max-width:860px; margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .chrome-left { display:flex; align-items:center; gap:16px; }
+  .traffic-dots { display:flex; gap:7px; }
+  .traffic-dots span { width:11px; height:11px; border-radius:50%; display:block; }
+  .traffic-dots span:nth-child(1) { background:#EF4444; opacity:.55; }
+  .traffic-dots span:nth-child(2) { background:#F59E0B; opacity:.55; }
+  .traffic-dots span:nth-child(3) { background:#10B981; opacity:.55; }
+  .chrome-filename { font-family:'JetBrains Mono',monospace; font-size:13px; color:#475569; }
+  .chrome-filename strong { color:#64748B; font-weight:500; }
+  .chrome-nav-links { display:flex; align-items:center; gap:28px; }
+  .chrome-nav-links a {
+    font-family:'JetBrains Mono',monospace; font-size:13px; color:#64748B;
+    text-decoration:none; transition:color .2s;
+  }
+  .chrome-nav-links a:hover { color:#F8FAFC; }
+  .btn {
+    font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500;
+    padding:10px 20px; border-radius:8px; border:1px solid rgba(255,255,255,0.07);
+    display:inline-flex; align-items:center; gap:8px;
+    transition:all .2s; cursor:pointer; text-decoration:none;
+  }
+  .btn-primary { background:linear-gradient(135deg,#6366F1,#06B6D4); color:#fff; border:none; }
+  .btn-primary:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+  /* ── Hero ── */
+  .hero { padding:96px 0 72px; text-align:center; }
+  .episode-badge {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:3px;
+    color:#A78BFA; text-transform:uppercase; margin-bottom:32px;
+    padding:10px 22px; border-radius:50px;
+    background:rgba(99,102,241,0.10); border:1px solid rgba(99,102,241,0.25);
+  }
+  .episode-badge::before {
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:#A78BFA; display:inline-block; animation:pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  h1 {
+    font-size:clamp(40px,6vw,68px); font-weight:900; line-height:1.08;
+    letter-spacing:-2px; margin-bottom:24px;
+  }
+  .grad {
+    background:linear-gradient(135deg,#A78BFA,#6366F1 40%,#06B6D4);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .hero-sub { font-size:20px; color:#94A3B8; max-width:560px; margin:0 auto 48px; line-height:1.65; }
+
+  /* ── Perks ── */
+  .perks { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:52px; }
+  .perk { display:flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:13px; color:#64748B; }
+  .perk-dot { width:6px; height:6px; border-radius:50%; background:#10B981; flex-shrink:0; }
+
+  /* ── Form card ── */
+  .form-card {
+    background:#080B11; border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px; padding:48px 52px; max-width:540px; margin:0 auto;
+    box-shadow:0 0 80px rgba(99,102,241,0.12);
+  }
+  .form-label {
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:#64748B;
+    letter-spacing:2px; text-transform:uppercase; display:block; margin-bottom:10px;
+  }
+  .form-input {
+    width:100%; padding:16px 20px; background:#0D1117;
+    border:1px solid rgba(255,255,255,0.08); border-radius:8px;
+    color:#F8FAFC; font-family:'Inter',sans-serif; font-size:16px;
+    outline:none; transition:border-color .2s, box-shadow .2s; margin-bottom:16px;
+  }
+  .form-input:focus { border-color:#6366F1; box-shadow:0 0 0 3px rgba(99,102,241,0.15); }
+  .form-input::placeholder { color:#334155; }
+  .form-btn {
+    width:100%; padding:18px; border:none; border-radius:8px; cursor:pointer;
+    font-family:'JetBrains Mono',monospace; font-size:15px; font-weight:700;
+    letter-spacing:1px; color:#fff;
+    background:linear-gradient(135deg,#6366F1,#06B6D4);
+    transition:opacity .2s, transform .1s;
+  }
+  .form-btn:hover { opacity:.9; }
+  .form-btn:active { transform:scale(0.99); }
+  .form-btn:disabled { opacity:.5; cursor:not-allowed; }
+  .form-note { font-size:12px; color:#334155; text-align:center; margin-top:14px; font-family:'JetBrains Mono',monospace; }
+  .msg { display:none; padding:16px 20px; border-radius:8px; margin-top:16px; font-family:'JetBrains Mono',monospace; font-size:13px; text-align:center; }
+  .msg-success { background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.25); color:#34D399; }
+  .msg-error { background:rgba(239,68,68,0.10); border:1px solid rgba(239,68,68,0.2); color:#F87171; }
+
+  /* ── Episode grid ── */
+  .coming-section { padding:80px 0 40px; }
+  .section-eyebrow {
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:4px;
+    color:#64748B; text-transform:uppercase; text-align:center; margin-bottom:16px;
+  }
+  .section-title { font-size:28px; font-weight:900; text-align:center; margin-bottom:40px; letter-spacing:-1px; }
+  .ep-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+  .ep-card {
+    background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);
+    border-radius:12px; padding:20px 22px;
+  }
+  .ep-num {
+    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700;
+    padding:5px 12px; border-radius:4px; display:inline-block; margin-bottom:12px;
+  }
+  .ep-title { font-size:14px; font-weight:700; color:#E2E8F0; margin-bottom:6px; }
+  .ep-desc { font-size:12px; color:#64748B; line-height:1.5; }
+
+  /* ── Footer ── */
+  footer {
+    border-top:1px solid rgba(255,255,255,0.07); padding:32px 0; margin-top:40px;
+    text-align:center; font-family:'JetBrains Mono',monospace;
+    font-size:12px; color:#334155; position:relative; z-index:1;
+  }
+  footer a { color:#64748B; text-decoration:none; transition:color .2s; }
+  footer a:hover { color:#A78BFA; }
+</style>
+</head>
+<body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+  <div class="chrome-bar">
+    <div class="chrome-left">
+      <span class="traffic-dots"><span></span><span></span><span></span></span>
+      <span class="chrome-filename"><strong>pipelines.py</strong> / cheatsheet.py</span>
+    </div>
+    <div class="chrome-nav-links">
+      <a href="index.html">Home</a>
+      <a href="episodes.html">Episodes</a>
+      <a href="about.html">About</a>
+      <a href="https://www.youtube.com/@pipelines.py_YT" class="btn btn-primary" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10.5 9.5l5 2.5-5 2.5z"/></svg>YouTube</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="episode-badge">Free Download · EP01 Cheat Sheet</div>
+    <h1>Learn Python.<br><span class="grad">Keep the reference.</span></h1>
+    <p class="hero-sub">
+      One free cheat sheet per episode. Clear, beginner-friendly, and built around the exact
+      concepts taught in the <em>Python From Zero</em> series.
+    </p>
+    <div class="perks">
+      <div class="perk"><div class="perk-dot"></div>Single page. Print or pin it.</div>
+      <div class="perk"><div class="perk-dot"></div>Real runnable code examples</div>
+      <div class="perk"><div class="perk-dot"></div>New sheet with every episode</div>
+      <div class="perk"><div class="perk-dot"></div>No spam. Unsubscribe anytime.</div>
+    </div>
+    <div class="form-card">
+      <form id="signup-form" novalidate>
+        <label class="form-label" for="name">First name</label>
+        <input class="form-input" type="text" id="name" name="name"
+               placeholder="Jordan" autocomplete="given-name" required>
+        <label class="form-label" for="email">Email address</label>
+        <input class="form-input" type="email" id="email" name="email"
+               placeholder="you@email.com" autocomplete="email" required>
+        <button class="form-btn" type="submit" id="submit-btn">
+          Get the EP01 Cheat Sheet →
+        </button>
+        <p class="form-note">Free. No spam. One email per episode drop.</p>
+        <div class="msg msg-success" id="msg-success">
+          ✓ You're in — check your inbox for the EP01 cheat sheet. 🐍
+        </div>
+        <div class="msg msg-error" id="msg-error">
+          Something went wrong. Try again or email pipelines.py@gmail.com
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="coming-section">
+  <div class="container">
+    <p class="section-eyebrow">Python from Zero · Cheat Sheet Series</p>
+    <h2 class="section-title">A cheat sheet for <span class="grad">every episode.</span></h2>
+    <div class="ep-grid">
+      <div class="ep-card">
+        <span class="ep-num" style="background:rgba(167,139,250,0.12);color:#A78BFA;">EP01</span>
+        <div class="ep-title">Your First Line of Code</div>
+        <div class="ep-desc">print() · variables · f-strings · string multiplication</div>
+      </div>
+      <div class="ep-card">
+        <span class="ep-num" style="background:rgba(6,182,212,0.12);color:#06B6D4;">EP02</span>
+        <div class="ep-title">Variables &amp; Data Types</div>
+        <div class="ep-desc">str · int · float · bool · type() · conversion</div>
+      </div>
+      <div class="ep-card">
+        <span class="ep-num" style="background:rgba(244,114,182,0.12);color:#F472B6;">EP03</span>
+        <div class="ep-title">Strings &amp; String Methods</div>
+        <div class="ep-desc">strip · upper/lower · len · slicing · replace · split</div>
+      </div>
+      <div class="ep-card">
+        <span class="ep-num" style="background:rgba(99,102,241,0.12);color:#818CF8;">EP04</span>
+        <div class="ep-title">Lists</div>
+        <div class="ep-desc">append · remove · indexing · len · loops</div>
+      </div>
+      <div class="ep-card">
+        <span class="ep-num" style="background:rgba(16,185,129,0.12);color:#34D399;">EP05+</span>
+        <div class="ep-title">More coming every week</div>
+        <div class="ep-desc">Loops · Conditionals · Functions · File reading · and more</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>
+      <a href="https://www.youtube.com/@pipelines.py_YT" target="_blank" rel="noopener">YouTube</a> ·
+      <a href="https://www.instagram.com/pipelines.py/" target="_blank" rel="noopener">Instagram</a> ·
+      <a href="https://www.tiktok.com/@pipelines.py" target="_blank" rel="noopener">TikTok</a>
+    </p>
+    <p style="margin-top:10px;">© pipelines.py · Python for data people</p>
+  </div>
+</footer>
+
+<script>
+  // ── Paste your Google Apps Script URL here after setup ──
+  const APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+  const form = document.getElementById("signup-form");
+  const btn  = document.getElementById("submit-btn");
+  const msgSuccess = document.getElementById("msg-success");
+  const msgError   = document.getElementById("msg-error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name  = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    if (!name || !email) return;
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+    msgSuccess.style.display = "none";
+    msgError.style.display   = "none";
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, source: "ep01-cheatsheet", timestamp: new Date().toISOString() })
+      });
+      msgSuccess.style.display = "block";
+      form.reset();
+    } catch (err) {
+      msgError.style.display = "block";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Get the EP01 Cheat Sheet →";
+    }
+  });
+</script>
+</body>
+</html>
