@@ -133,7 +133,7 @@ code { font-family: var(--font-mono); color: var(--syn-string); font-size: 0.92e
 .chrome-filename { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
 .chrome-filename strong { color: var(--text-muted); font-weight: 500; }
 
-.chrome-nav-links { display: flex; align-items: center; gap: 28px; }
+.chrome-nav-links { display: flex; align-items: center; gap: 20px; }
 .chrome-nav-links a { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); transition: color .2s; }
 .chrome-nav-links a:hover { color: var(--white); }
 .chrome-nav-links a.active { color: var(--violet-lt); }
@@ -262,10 +262,16 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
 /* ===== Responsive ===== */
 @media (max-width: 860px) {
   .card-grid { grid-template-columns: 1fr; }
+  .chrome-nav-links { gap: 14px; }
 }
 @media (max-width: 620px) {
   .chrome-bar { flex-wrap: wrap; }
-  .chrome-nav-links { width: 100%; justify-content: space-between; order: 3; padding-top: 10px; border-top: 1px solid var(--border); }
+  .chrome-nav-links {
+    width: 100%; order: 3;
+    padding-top: 10px; border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 10px 16px;
+    justify-content: flex-start;
+  }
   .hero { padding: 64px 0 56px; }
   .episode-card.full .episode-body { padding: 24px; }
   footer .wrap { flex-direction: column; align-items: flex-start; }
