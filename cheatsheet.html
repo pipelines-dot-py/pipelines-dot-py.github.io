@@ -202,7 +202,7 @@
         </button>
         <p class="form-note">Free. No spam. One email per episode drop.</p>
         <div class="msg msg-success" id="msg-success">
-          ✓ You're in — check your inbox for the EP01 cheat sheet. 🐍
+          ✓ You're in! Download link will appear here. 🐍
         </div>
         <div class="msg msg-error" id="msg-error">
           Something went wrong. Try again or email pipelines.py@gmail.com
@@ -259,7 +259,7 @@
 
 <script>
   // ── Paste your Google Apps Script URL here after setup ──
-  const APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnnif11sE-MoMUqiH5RDLcpIJjXjE9bhNMppzRtNe-se3bqwwdB7RwB-PSvgum2LO_/exec";
 
   const form = document.getElementById("signup-form");
   const btn  = document.getElementById("submit-btn");
@@ -280,8 +280,9 @@
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, source: "ep01-cheatsheet", timestamp: new Date().toISOString() })
+        body: JSON.stringify({ firstName: name, lastName: "", email, source: "ep01-cheatsheet", timestamp: new Date().toISOString() })
       });
+      msgSuccess.innerHTML = '✓ You\'re in! <a href="ep01-cheatsheet.pdf" style="color:#34D399;font-weight:700;text-decoration:none;" target="_blank">Download your EP01 cheat sheet here →</a> 🐍';
       msgSuccess.style.display = "block";
       form.reset();
     } catch (err) {
