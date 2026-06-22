@@ -32,7 +32,7 @@
     background:radial-gradient(circle, rgba(6,182,212,0.20) 0%, transparent 70%); }
   .container { max-width:860px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
 
-  /* ── Chrome Nav ── */
+  /* ── Nav ── */
   nav {
     border-bottom:1px solid rgba(255,255,255,0.07);
     background:rgba(8,11,17,0.85); backdrop-filter:blur(12px);
@@ -56,14 +56,7 @@
     text-decoration:none; transition:color .2s;
   }
   .chrome-nav-links a:hover { color:#F8FAFC; }
-  .btn {
-    font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500;
-    padding:10px 20px; border-radius:8px; border:1px solid rgba(255,255,255,0.07);
-    display:inline-flex; align-items:center; gap:8px;
-    transition:all .2s; cursor:pointer; text-decoration:none;
-  }
-  .btn-primary { background:linear-gradient(135deg,#6366F1,#06B6D4); color:#fff; border:none; }
-  .btn-primary:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  .chrome-nav-links a.active { color:#F8FAFC; }
 
   /* ── Hero ── */
   .hero { padding:96px 0 72px; text-align:center; }
@@ -160,6 +153,7 @@
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
+<!-- Nav — Cheat Sheet is active, no YouTube button -->
 <nav>
   <div class="chrome-bar">
     <div class="chrome-left">
@@ -170,24 +164,25 @@
       <a href="index.html">Home</a>
       <a href="episodes.html">Episodes</a>
       <a href="about.html">About</a>
-      <a href="https://www.youtube.com/@pipelines.py_YT" class="btn btn-primary" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10.5 9.5l5 2.5-5 2.5z"/></svg>YouTube</a>
+      <a href="cheatsheet.html" class="active">Cheat Sheet</a>
     </div>
   </div>
 </nav>
 
 <section class="hero">
   <div class="container">
-    <div class="episode-badge">Free Download · EP01 Cheat Sheet</div>
-    <h1>Learn Python.<br><span class="grad">Keep the reference.</span></h1>
-    <p class="hero-sub">
+    <!-- badge, h1, sub, button text and note all change based on ?ref= param via JS below -->
+    <div class="episode-badge" id="page-badge">Free Download · EP01 Cheat Sheet</div>
+    <h1 id="page-h1">Learn Python.<br><span class="grad">Keep the reference.</span></h1>
+    <p class="hero-sub" id="page-sub">
       One free cheat sheet per episode. Clear, beginner-friendly, and built around the exact
       concepts taught in the <em>Python From Zero</em> series.
     </p>
-    <div class="perks">
+    <div class="perks" id="page-perks">
       <div class="perk"><div class="perk-dot"></div>Single page. Print or pin it.</div>
       <div class="perk"><div class="perk-dot"></div>Real runnable code examples</div>
       <div class="perk"><div class="perk-dot"></div>New sheet with every episode</div>
-      <div class="perk"><div class="perk-dot"></div>No spam. Unsubscribe anytime.</div>
+      <div class="perk"><div class="perk-dot"></div>Free. No account needed.</div>
     </div>
     <div class="form-card">
       <form id="signup-form" novalidate>
@@ -200,10 +195,8 @@
         <button class="form-btn" type="submit" id="submit-btn">
           Get the EP01 Cheat Sheet →
         </button>
-        <p class="form-note">Free. Enter your email to unlock the download.</p>
-        <div class="msg msg-success" id="msg-success">
-          ✓ Your download is ready below. 🐍
-        </div>
+        <p class="form-note" id="form-note">Free. No account needed.</p>
+        <div class="msg msg-success" id="msg-success"></div>
         <div class="msg msg-error" id="msg-error">
           Something went wrong. Try again or email pipelines.py@gmail.com
         </div>
@@ -216,33 +209,7 @@
   <div class="container">
     <p class="section-eyebrow">Python from Zero · Cheat Sheet Series</p>
     <h2 class="section-title">A cheat sheet for <span class="grad">every episode.</span></h2>
-    <div class="ep-grid">
-      <div class="ep-card">
-        <span class="ep-num" style="background:rgba(167,139,250,0.12);color:#A78BFA;">EP01</span>
-        <div class="ep-title">Your First Line of Code</div>
-        <div class="ep-desc">print() · variables · f-strings · string multiplication</div>
-      </div>
-      <div class="ep-card">
-        <span class="ep-num" style="background:rgba(6,182,212,0.12);color:#06B6D4;">EP02</span>
-        <div class="ep-title">Variables &amp; Data Types</div>
-        <div class="ep-desc">str · int · float · bool · type() · conversion</div>
-      </div>
-      <div class="ep-card">
-        <span class="ep-num" style="background:rgba(244,114,182,0.12);color:#F472B6;">EP03</span>
-        <div class="ep-title">Strings &amp; String Methods</div>
-        <div class="ep-desc">strip · upper/lower · len · slicing · replace · split</div>
-      </div>
-      <div class="ep-card">
-        <span class="ep-num" style="background:rgba(99,102,241,0.12);color:#818CF8;">EP04</span>
-        <div class="ep-title">Lists</div>
-        <div class="ep-desc">append · remove · indexing · len · loops</div>
-      </div>
-      <div class="ep-card">
-        <span class="ep-num" style="background:rgba(16,185,129,0.12);color:#34D399;">EP05+</span>
-        <div class="ep-title">More coming every week</div>
-        <div class="ep-desc">Loops · Conditionals · Functions · File reading · and more</div>
-      </div>
-    </div>
+    <div class="ep-grid" id="ep-grid"></div>
   </div>
 </section>
 
@@ -258,11 +225,58 @@
 </footer>
 
 <script>
-  // ── Paste your Google Apps Script URL here after setup ──
+  // ── Episode grid ──────────────────────────────────────────────
+  const EPISODES = [
+    { num:"EP01", title:"Your First Line of Code",    desc:"print() · variables · f-strings · string multiplication", color:"#A78BFA", bg:"rgba(167,139,250,0.12)", status:"live",  pdf:"ep01-cheatsheet.pdf" },
+    { num:"EP02", title:"Variables & Data Types",     desc:"str · int · float · bool · type() · conversion",          color:"#06B6D4", bg:"rgba(6,182,212,0.12)",   status:"soon",  pdf:"ep02-cheatsheet.pdf" },
+    { num:"EP03", title:"Strings & String Methods",   desc:"strip · upper/lower · len · slicing · replace · split",    color:"#F472B6", bg:"rgba(244,114,182,0.12)", status:"soon",  pdf:"ep03-cheatsheet.pdf" },
+    { num:"EP04", title:"Lists",                      desc:"append · remove · indexing · len · loops",                 color:"#818CF8", bg:"rgba(99,102,241,0.12)",  status:"soon",  pdf:"ep04-cheatsheet.pdf" },
+    { num:"EP05", title:"Loops",                      desc:"for · while · range() · enumerate() · break",              color:"#34D399", bg:"rgba(16,185,129,0.12)",  status:"soon",  pdf:"ep05-cheatsheet.pdf" },
+    { num:"EP06", title:"Conditionals",               desc:"if · elif · else · comparison operators",                  color:"#FBBF24", bg:"rgba(251,191,36,0.12)",  status:"soon",  pdf:"ep06-cheatsheet.pdf" },
+    { num:"EP07", title:"Functions",                  desc:"def · parameters · return · default args",                 color:"#F472B6", bg:"rgba(244,114,182,0.12)", status:"soon",  pdf:"ep07-cheatsheet.pdf" },
+    { num:"EP08", title:"Reading Files",              desc:"open() · read() · readlines() · CSV",                     color:"#06B6D4", bg:"rgba(6,182,212,0.12)",   status:"soon",  pdf:"ep08-cheatsheet.pdf" },
+    { num:"EP09", title:"Writing Files",              desc:"write() · append mode · auto-naming",                     color:"#A78BFA", bg:"rgba(167,139,250,0.12)", status:"soon",  pdf:"ep09-cheatsheet.pdf" },
+    { num:"EP10", title:"Capstone Project",           desc:"Putting it all together · data automation pipeline",       color:"#34D399", bg:"rgba(16,185,129,0.12)",  status:"soon",  pdf:"ep10-cheatsheet.pdf" }
+  ];
+
+  const grid = document.getElementById("ep-grid");
+  EPISODES.forEach(ep => {
+    const isLive = ep.status === "live";
+    const card = document.createElement("div");
+    card.className = "ep-card";
+    card.innerHTML = `
+      <span class="ep-num" style="background:${ep.bg};color:${ep.color};">${ep.num}</span>
+      <div class="ep-title">${ep.title}</div>
+      <div class="ep-desc">${ep.desc}</div>
+      ${isLive
+        ? `<a href="${ep.pdf}" style="display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#A78BFA;text-decoration:none;padding:7px 14px;border-radius:6px;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);" target="_blank">Download →</a>`
+        : `<span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#334155;font-style:italic;margin-top:8px;display:inline-block;">Coming soon</span>`}
+    `;
+    grid.appendChild(card);
+  });
+
+  // ── Detect ?ref=waitlist and adjust all messaging ─────────────
+  const isWaitlist = new URLSearchParams(window.location.search).get("ref") === "waitlist";
+
+  if (isWaitlist) {
+    document.title = "Join the PyPath Waitlist — pipelines.py";
+    document.getElementById("page-badge").textContent  = "Coming Soon · PyPath";
+    document.getElementById("page-h1").innerHTML       = 'Join the<br><span class="grad">PyPath Waitlist.</span>';
+    document.getElementById("page-sub").textContent    = "PyPath is a structured, self-paced path from zero to job-ready Python. Drop your email and we'll let you know when it launches.";
+    document.getElementById("page-perks").innerHTML    = `
+      <div class="perk"><div class="perk-dot"></div>Beginner to advanced in one path</div>
+      <div class="perk"><div class="perk-dot"></div>Real projects, not just exercises</div>
+      <div class="perk"><div class="perk-dot"></div>Early access for waitlist members</div>
+      <div class="perk"><div class="perk-dot"></div>Free to join — no commitment</div>`;
+    document.getElementById("submit-btn").textContent  = "Join the PyPath Waitlist →";
+    document.getElementById("form-note").textContent   = "Free to join. We'll email you when PyPath launches.";
+  }
+
+  // ── Apps Script URL ───────────────────────────────────────────
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnnif11sE-MoMUqiH5RDLcpIJjXjE9bhNMppzRtNe-se3bqwwdB7RwB-PSvgum2LO_/exec";
 
-  const form = document.getElementById("signup-form");
-  const btn  = document.getElementById("submit-btn");
+  const form       = document.getElementById("signup-form");
+  const btn        = document.getElementById("submit-btn");
   const msgSuccess = document.getElementById("msg-success");
   const msgError   = document.getElementById("msg-error");
 
@@ -271,25 +285,40 @@
     const name  = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     if (!name || !email) return;
-    btn.disabled = true;
+
+    const originalBtnText = btn.textContent;
+    btn.disabled    = true;
     btn.textContent = "Sending...";
     msgSuccess.style.display = "none";
     msgError.style.display   = "none";
+
     try {
       await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
+        method:  "POST",
+        mode:    "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName: name, lastName: "", email, source: "ep01-cheatsheet", timestamp: new Date().toISOString() })
+        body:    JSON.stringify({
+          firstName: name,
+          lastName:  "",
+          email,
+          source:    isWaitlist ? "pypath-waitlist" : "ep01-cheatsheet",
+          timestamp: new Date().toISOString()
+        })
       });
-      msgSuccess.innerHTML = '✓ <a href="ep01-cheatsheet.pdf" style="color:#34D399;font-weight:700;text-decoration:none;" target="_blank">Click here to download your EP01 cheat sheet →</a> 🐍';
+
+      if (isWaitlist) {
+        msgSuccess.innerHTML = "✓ You're on the list! We'll email you when PyPath launches. 🐍";
+      } else {
+        msgSuccess.innerHTML = '✓ <a href="ep01-cheatsheet.pdf" style="color:#34D399;font-weight:700;text-decoration:none;" target="_blank">Click here to download your EP01 cheat sheet →</a> 🐍';
+      }
       msgSuccess.style.display = "block";
       form.reset();
+
     } catch (err) {
       msgError.style.display = "block";
     } finally {
-      btn.disabled = false;
-      btn.textContent = "Get the EP01 Cheat Sheet →";
+      btn.disabled    = false;
+      btn.textContent = originalBtnText;
     }
   });
 </script>
