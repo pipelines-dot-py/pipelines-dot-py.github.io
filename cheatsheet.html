@@ -170,7 +170,7 @@
       <a href="index.html">Home</a>
       <a href="episodes.html">Episodes</a>
       <a href="about.html">About</a>
-      <a href="cheatsheet.html" style="color:#F8FAFC;">Cheat Sheet</a>
+      <a href="https://www.youtube.com/@pipelines.py_YT" class="btn btn-primary" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M10.5 9.5l5 2.5-5 2.5z"/></svg>YouTube</a>
     </div>
   </div>
 </nav>
@@ -200,9 +200,9 @@
         <button class="form-btn" type="submit" id="submit-btn">
           Get the EP01 Cheat Sheet →
         </button>
-        <p class="form-note">Free. No spam. One email per episode drop.</p>
+        <p class="form-note">Free. Enter your email to unlock the download.</p>
         <div class="msg msg-success" id="msg-success">
-          ✓ You're in! Download link will appear here. 🐍
+          ✓ Your download is ready below. 🐍
         </div>
         <div class="msg msg-error" id="msg-error">
           Something went wrong. Try again or email pipelines.py@gmail.com
@@ -282,7 +282,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstName: name, lastName: "", email, source: "ep01-cheatsheet", timestamp: new Date().toISOString() })
       });
-      msgSuccess.innerHTML = '✓ You\'re in! <a href="ep01-cheatsheet.pdf" style="color:#34D399;font-weight:700;text-decoration:none;" target="_blank">Download your EP01 cheat sheet here →</a> 🐍';
+      msgSuccess.innerHTML = '✓ <a href="ep01-cheatsheet.pdf" style="color:#34D399;font-weight:700;text-decoration:none;" target="_blank">Click here to download your EP01 cheat sheet →</a> 🐍';
       msgSuccess.style.display = "block";
       form.reset();
     } catch (err) {
